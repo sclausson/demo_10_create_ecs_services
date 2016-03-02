@@ -1,0 +1,60 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "AWS CloudFormation template to create ECS Services: Portal, Weather and Stock-Price.",
+    "Parameters" : {
+        "ClusterName" : {
+            "Description" : "Name of the ECS Cluster where this service will run",
+            "Type" : "String"
+        },
+        "DesiredCountPortal" : {
+            "Description" : "Number of Portal containers to run on cluster",
+            "Type" : "Number"
+        },
+        "DesiredCountWeather" : {
+            "Description" : "Number of Weather containers to run on cluster",
+            "Type" : "Number"
+        },
+        "DesiredCountStockPrice" : {
+            "Description" : "Number of Stock Price containers to run on cluster",
+            "Type" : "Number"
+        },
+        "TaskDefinitionPortal" : {
+            "Description" : "Family and revision of the portal task definition",
+            "Type" : "String"
+        },
+        "TaskDefinitionWeather" : {
+            "Description" : "Family and revision of the weather task definition",
+            "Type" : "String"
+        },
+        "TaskDefinitionStockPrice" : {
+            "Description" : "Family and revision of the stock price task definition",
+            "Type" : "String"
+        }
+    },
+    "Resources" : {
+        "PortalService" : {
+            "Type" : "AWS::ECS::Service",
+            "Properties" : {
+                "Cluster": { "Ref" : "ClusterName" },
+                "DesiredCount": { "Ref" : "DesiredCountPortal" },
+                "TaskDefinition" : { "Ref" : "TaskDefinitionPortal" }
+            }
+        },
+        "WeatherService" : {
+            "Type" : "AWS::ECS::Service",
+            "Properties" : {
+                "Cluster": { "Ref" : "ClusterName" },
+                "DesiredCount": { "Ref" : "DesiredCountWeather" },
+                "TaskDefinition" : { "Ref" : "TaskDefinitionWeather" }
+            }
+        },
+        "StockPriceService" : {
+            "Type" : "AWS::ECS::Service",
+            "Properties" : {
+                "Cluster": { "Ref" : "ClusterName" },
+                "DesiredCount": { "Ref" : "DesiredCountStockPrice" },
+                "TaskDefinition" : { "Ref" : "TaskDefinitionStockPrice" }
+            }
+        }
+    }
+}
